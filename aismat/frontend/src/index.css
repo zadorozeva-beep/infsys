@@ -1,0 +1,247 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Кольорові теми (акценти) ─────────────────────────────────────
+   Кожна тема перевизначає 11 змінних --mint-50..950.
+   Tailwind-утиліти `bg-mint-*`, `text-mint-*`, `ring-mint-*` автоматично
+   беруть актуальні значення завдяки `rgb(var(--mint-XXX) / <alpha-value>)`
+   у tailwind.config.js — тож зміна теми не вимагає перебудови UI.
+
+   Значення — RGB через пробіл (без коми) для Tailwind alpha syntax. */
+
+:root,
+[data-theme='mint'] {
+  --mint-50: 240 253 250;
+  --mint-100: 204 251 241;
+  --mint-200: 153 246 228;
+  --mint-300: 94 234 212;
+  --mint-400: 45 212 191;
+  --mint-500: 20 184 166;
+  --mint-600: 13 148 136;
+  --mint-700: 15 118 110;
+  --mint-800: 17 94 89;
+  --mint-900: 19 78 74;
+  --mint-950: 4 47 46;
+}
+
+[data-theme='ocean'] {
+  --mint-50: 240 249 255;
+  --mint-100: 224 242 254;
+  --mint-200: 186 230 253;
+  --mint-300: 125 211 252;
+  --mint-400: 56 189 248;
+  --mint-500: 14 165 233;
+  --mint-600: 2 132 199;
+  --mint-700: 3 105 161;
+  --mint-800: 7 89 133;
+  --mint-900: 12 74 110;
+  --mint-950: 8 47 73;
+}
+
+[data-theme='sunset'] {
+  --mint-50: 255 247 237;
+  --mint-100: 255 237 213;
+  --mint-200: 254 215 170;
+  --mint-300: 253 186 116;
+  --mint-400: 251 146 60;
+  --mint-500: 249 115 22;
+  --mint-600: 234 88 12;
+  --mint-700: 194 65 12;
+  --mint-800: 154 52 18;
+  --mint-900: 124 45 18;
+  --mint-950: 67 20 7;
+}
+
+[data-theme='forest'] {
+  --mint-50: 236 253 245;
+  --mint-100: 209 250 229;
+  --mint-200: 167 243 208;
+  --mint-300: 110 231 183;
+  --mint-400: 52 211 153;
+  --mint-500: 16 185 129;
+  --mint-600: 5 150 105;
+  --mint-700: 4 120 87;
+  --mint-800: 6 95 70;
+  --mint-900: 6 78 59;
+  --mint-950: 2 44 34;
+}
+
+[data-theme='rose'] {
+  --mint-50: 255 241 242;
+  --mint-100: 255 228 230;
+  --mint-200: 254 205 211;
+  --mint-300: 253 164 175;
+  --mint-400: 251 113 133;
+  --mint-500: 244 63 94;
+  --mint-600: 225 29 72;
+  --mint-700: 190 18 60;
+  --mint-800: 159 18 57;
+  --mint-900: 136 19 55;
+  --mint-950: 76 5 25;
+}
+
+[data-theme='lavender'] {
+  --mint-50: 245 243 255;
+  --mint-100: 237 233 254;
+  --mint-200: 221 214 254;
+  --mint-300: 196 181 253;
+  --mint-400: 167 139 250;
+  --mint-500: 139 92 246;
+  --mint-600: 124 58 237;
+  --mint-700: 109 40 217;
+  --mint-800: 91 33 182;
+  --mint-900: 76 29 149;
+  --mint-950: 46 16 101;
+}
+
+@layer base {
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+  html {
+    color-scheme: light;
+  }
+  html.dark {
+    color-scheme: dark;
+  }
+  body {
+    font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    transition: background-color 0.5s ease, color 0.5s ease;
+  }
+  html.dark body {
+    background-image:
+      radial-gradient(circle at 30% 0%, rgb(var(--mint-500) / 0.3), transparent 55%),
+      radial-gradient(circle at 80% 100%, rgb(var(--mint-700) / 0.4), transparent 50%),
+      linear-gradient(180deg, rgb(var(--mint-950)) 0%, rgb(var(--mint-900)) 100%) !important;
+    color: rgb(var(--mint-100));
+  }
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: 'Manrope', 'Inter', system-ui, sans-serif;
+    letter-spacing: -0.02em;
+  }
+  /* Кастомний скролбар */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, rgb(var(--mint-300)), rgb(var(--mint-500)));
+    border-radius: 999px;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, rgb(var(--mint-400)), rgb(var(--mint-600)));
+    background-clip: padding-box;
+  }
+  html.dark ::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, rgb(var(--mint-600)), rgb(var(--mint-800)));
+    background-clip: padding-box;
+  }
+  ::selection {
+    background-color: rgb(var(--mint-300) / 0.55);
+    color: rgb(var(--mint-900));
+  }
+  html.dark ::selection {
+    background-color: rgb(var(--mint-500) / 0.6);
+    color: rgb(var(--mint-50));
+  }
+}
+
+@layer components {
+  /* === Кнопки === */
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-2xl px-5 py-2.5 text-sm font-semibold transition-all duration-200 disabled:cursor-not-allowed disabled:opacity-50;
+  }
+  .btn-primary {
+    @apply btn bg-mint-gradient text-white shadow-mint hover:shadow-mint-lg hover:-translate-y-0.5 active:translate-y-0;
+  }
+  .btn-secondary {
+    @apply btn bg-white/80 text-mint-800 ring-1 ring-mint-200 backdrop-blur hover:bg-mint-50 hover:ring-mint-300 dark:bg-mint-900/60 dark:text-mint-100 dark:ring-mint-700 dark:hover:bg-mint-800/70 dark:hover:ring-mint-600;
+  }
+  .btn-ghost {
+    @apply btn bg-transparent text-mint-700 hover:bg-mint-100 dark:text-mint-200 dark:hover:bg-mint-800/50;
+  }
+  .btn-danger {
+    @apply btn bg-rose-500 text-white shadow-[0_10px_30px_-10px_rgba(244,63,94,0.5)] hover:bg-rose-600 hover:-translate-y-0.5;
+  }
+
+  /* === Поля вводу === */
+  .input {
+    @apply w-full rounded-2xl border border-mint-200/80 bg-white/80 px-4 py-2.5 text-sm text-slate-800 shadow-sm backdrop-blur transition placeholder:text-slate-400 focus:border-mint-400 focus:bg-white focus:outline-none focus:ring-4 focus:ring-mint-200/60 dark:border-mint-700/60 dark:bg-mint-900/40 dark:text-mint-50 dark:placeholder:text-mint-500 dark:focus:border-mint-400 dark:focus:bg-mint-900/60 dark:focus:ring-mint-700/40;
+  }
+  .label {
+    @apply mb-1.5 block text-xs font-semibold uppercase tracking-wider text-mint-700 dark:text-mint-300;
+  }
+
+  /* === Картки === */
+  .card {
+    @apply rounded-3xl border border-white/60 bg-white/75 p-6 shadow-soft backdrop-blur-xl dark:border-mint-800/60 dark:bg-mint-900/40 dark:shadow-[0_8px_24px_-8px_rgba(0,0,0,0.5)];
+  }
+  .card-hover {
+    @apply card transition-all duration-300 hover:-translate-y-1 hover:border-mint-200 hover:shadow-mint-lg dark:hover:border-mint-600/70 dark:hover:shadow-[0_25px_50px_-12px_rgb(var(--mint-500)/0.45)];
+  }
+  .card-glow {
+    @apply card relative overflow-hidden;
+  }
+  .card-glow::before {
+    content: '';
+    @apply absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-mint-300 to-transparent opacity-70;
+  }
+  html.dark .card-glow::before {
+    @apply via-mint-400;
+  }
+
+  /* === Бейджі === */
+  .badge {
+    @apply inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-semibold;
+  }
+  .badge-mint {
+    @apply badge bg-mint-100 text-mint-800 ring-1 ring-inset ring-mint-200 dark:bg-mint-800/60 dark:text-mint-100 dark:ring-mint-700;
+  }
+  .badge-soft {
+    @apply badge bg-white/70 text-slate-700 ring-1 ring-inset ring-slate-200 dark:bg-mint-900/60 dark:text-mint-200 dark:ring-mint-700;
+  }
+
+  /* === Декоративний блоб === */
+  .blob {
+    @apply pointer-events-none absolute rounded-full blur-3xl opacity-60;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  .glass {
+    background-color: rgba(255, 255, 255, 0.65);
+    backdrop-filter: blur(16px) saturate(160%);
+    -webkit-backdrop-filter: blur(16px) saturate(160%);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+  }
+  html.dark .glass {
+    background-color: rgb(var(--mint-950) / 0.55);
+    border: 1px solid rgb(var(--mint-500) / 0.25);
+  }
+  .glass-mint {
+    background: linear-gradient(135deg, rgb(var(--mint-100) / 0.6), rgb(var(--mint-50) / 0.4));
+    backdrop-filter: blur(16px) saturate(160%);
+    -webkit-backdrop-filter: blur(16px) saturate(160%);
+    border: 1px solid rgb(var(--mint-300) / 0.35);
+  }
+  html.dark .glass-mint {
+    background: linear-gradient(135deg, rgb(var(--mint-700) / 0.45), rgb(var(--mint-900) / 0.35));
+    border: 1px solid rgb(var(--mint-400) / 0.3);
+  }
+}

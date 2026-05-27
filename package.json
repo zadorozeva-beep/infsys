@@ -1,0 +1,14 @@
+{
+  "name": "infsys-root",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Кореневий лаунчер — делегує до aismat/",
+  "scripts": {
+    "start": "npm --prefix aismat start",
+    "dev": "npm --prefix aismat start",
+    "install:all": "npm --prefix aismat run install:all",
+    "migrate": "npm --prefix aismat run migrate",
+    "seed": "npm --prefix aismat run seed",
+    "stop": "aismat\\stop.bat"
+  }
+}

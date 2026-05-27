@@ -1,0 +1,296 @@
+// АІС навчальних матеріалів — схема БД
+// Prisma camelCase у коді ↔ snake_case у Postgres
+// FTS-поле search_vector + GIN-індекс + тригер додаються окремою SQL-міграцією
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["fullTextSearch", "postgresqlExtensions"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Role {
+  id          Int     @id @default(autoincrement())
+  name        String  @unique @db.VarChar(32)
+  description String? @db.VarChar(255)
+
+  users User[]
+
+  @@map("roles")
+}
+
+model User {
+  id           Int      @id @default(autoincrement())
+  login        String   @unique @db.VarChar(64)
+  passwordHash String   @map("password_hash") @db.VarChar(255)
+  fullName     String   @map("full_name") @db.VarChar(255)
+  email        String   @unique @db.VarChar(255)
+  phone        String?  @db.VarChar(32)
+  roleId       Int      @map("role_id")
+  createdAt    DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  role             Role                @relation(fields: [roleId], references: [id], onDelete: Restrict)
+  materials        Material[]          @relation("MaterialAuthor")
+  programs         UserProgram[]
+  saved            SavedMaterial[]
+  events           MaterialEvent[]
+  comments         Comment[]
+  notifications    Notification[]
+  uploadedVersions MaterialVersion[]
+  planItems        LearningPlanItem[]
+
+  @@index([roleId])
+  @@map("users")
+}
+
+model Program {
+  id                 Int     @id @default(autoincrement())
+  name               String  @db.VarChar(255)
+  code               String  @unique @db.VarChar(32)
+  qualificationLevel String  @map("qualification_level") @db.VarChar(128)
+  durationYears      Decimal @map("duration_years") @db.Decimal(3, 1)
+
+  disciplines DisciplineProgram[]
+  users       UserProgram[]
+
+  @@map("programs")
+}
+
+model Discipline {
+  id          Int     @id @default(autoincrement())
+  name        String  @db.VarChar(255)
+  code        String  @unique @db.VarChar(32)
+  description String? @db.Text
+  credits     Decimal @db.Decimal(4, 1)
+
+  materials Material[]
+  programs  DisciplineProgram[]
+
+  @@map("disciplines")
+}
+
+model MaterialType {
+  id   Int     @id @default(autoincrement())
+  name String  @unique @db.VarChar(64)
+  icon String? @db.VarChar(64)
+
+  materials Material[]
+
+  @@map("material_types")
+}
+
+model Material {
+  id             Int       @id @default(autoincrement())
+  title          String    @db.VarChar(255)
+  description    String?   @db.Text
+  fileUrl        String    @map("file_url") @db.VarChar(512)
+  authorId       Int       @map("author_id")
+  disciplineId   Int       @map("discipline_id")
+  materialTypeId Int       @map("material_type_id")
+  fileSize       BigInt    @map("file_size")
+  mimeType       String    @map("mime_type") @db.VarChar(128)
+  downloadCount  Int       @default(0) @map("download_count")
+  currentVersion Int       @default(1) @map("current_version")
+  deletedAt      DateTime? @map("deleted_at") @db.Timestamptz(6)
+  createdAt      DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt      DateTime  @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  // tsvector колонка створюється і підтримується тригером (див. ручну SQL-міграцію).
+  // Тут оголошуємо її як Unsupported, щоб Prisma знала про неї, але не керувала нею напряму.
+  searchVector Unsupported("tsvector")? @map("search_vector")
+
+  author       User               @relation("MaterialAuthor", fields: [authorId], references: [id], onDelete: Restrict)
+  discipline   Discipline         @relation(fields: [disciplineId], references: [id], onDelete: Restrict)
+  materialType MaterialType       @relation(fields: [materialTypeId], references: [id], onDelete: Restrict)
+  tags         MaterialTag[]
+  savedBy      SavedMaterial[]
+  events       MaterialEvent[]
+  comments     Comment[]
+  versions     MaterialVersion[]
+  planItems    LearningPlanItem[]
+
+  @@index([authorId])
+  @@index([disciplineId])
+  @@index([materialTypeId])
+  @@index([createdAt(sort: Desc)])
+  @@index([deletedAt])
+  @@map("materials")
+}
+
+model MaterialVersion {
+  id          Int      @id @default(autoincrement())
+  materialId  Int      @map("material_id")
+  version     Int
+  title       String   @db.VarChar(255)
+  description String?  @db.Text
+  fileUrl     String   @map("file_url") @db.VarChar(512)
+  fileSize    BigInt   @map("file_size")
+  mimeType    String   @map("mime_type") @db.VarChar(128)
+  uploadedBy  Int      @map("uploaded_by")
+  changeNote  String?  @map("change_note") @db.Text
+  createdAt   DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  material Material @relation(fields: [materialId], references: [id], onDelete: Cascade)
+  uploader User     @relation(fields: [uploadedBy], references: [id], onDelete: Restrict)
+
+  @@unique([materialId, version])
+  @@index([materialId, version(sort: Desc)])
+  @@map("material_versions")
+}
+
+model Tag {
+  id   Int    @id @default(autoincrement())
+  name String @unique @db.VarChar(64)
+  slug String @unique @db.VarChar(64)
+
+  materials MaterialTag[]
+
+  @@map("tags")
+}
+
+model MaterialTag {
+  materialId Int @map("material_id")
+  tagId      Int @map("tag_id")
+
+  material Material @relation(fields: [materialId], references: [id], onDelete: Cascade)
+  tag      Tag      @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([materialId, tagId])
+  @@index([tagId])
+  @@map("material_tags")
+}
+
+model DisciplineProgram {
+  disciplineId Int @map("discipline_id")
+  programId    Int @map("program_id")
+  semester     Int
+
+  discipline Discipline @relation(fields: [disciplineId], references: [id], onDelete: Cascade)
+  program    Program    @relation(fields: [programId], references: [id], onDelete: Cascade)
+
+  @@id([disciplineId, programId])
+  @@index([programId])
+  @@map("discipline_programs")
+}
+
+model Comment {
+  id         Int      @id @default(autoincrement())
+  materialId Int      @map("material_id")
+  authorId   Int      @map("author_id")
+  content    String   @db.Text
+  createdAt  DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt  DateTime @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  material Material @relation(fields: [materialId], references: [id], onDelete: Cascade)
+  author   User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+
+  @@index([materialId, createdAt(sort: Desc)])
+  @@index([authorId])
+  @@map("comments")
+}
+
+enum NotificationType {
+  new_material
+  comment_on_material
+
+  @@map("notification_type")
+}
+
+model Notification {
+  id        BigInt           @id @default(autoincrement())
+  userId    Int              @map("user_id")
+  type      NotificationType
+  title     String           @db.VarChar(255)
+  body      String?          @db.Text
+  link      String?          @db.VarChar(255)
+  readAt    DateTime?        @map("read_at") @db.Timestamptz(6)
+  createdAt DateTime         @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, createdAt(sort: Desc)])
+  @@index([userId, readAt])
+  @@map("notifications")
+}
+
+enum PlanStatus {
+  todo
+  in_progress
+  done
+
+  @@map("plan_status")
+}
+
+model LearningPlanItem {
+  userId      Int        @map("user_id")
+  materialId  Int        @map("material_id")
+  status      PlanStatus @default(todo)
+  position    Int        @default(0)
+  addedAt     DateTime   @default(now()) @map("added_at") @db.Timestamptz(6)
+  updatedAt   DateTime   @updatedAt @map("updated_at") @db.Timestamptz(6)
+  completedAt DateTime?  @map("completed_at") @db.Timestamptz(6)
+
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  material Material @relation(fields: [materialId], references: [id], onDelete: Cascade)
+
+  @@id([userId, materialId])
+  @@index([userId, status, position])
+  @@index([materialId])
+  @@map("learning_plan_items")
+}
+
+enum MaterialEventType {
+  view
+  download
+  save
+  unsave
+
+  @@map("material_event_type")
+}
+
+model MaterialEvent {
+  id         BigInt            @id @default(autoincrement())
+  userId     Int?              @map("user_id")
+  materialId Int               @map("material_id")
+  eventType  MaterialEventType @map("event_type")
+  createdAt  DateTime          @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  user     User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  material Material @relation(fields: [materialId], references: [id], onDelete: Cascade)
+
+  @@index([createdAt])
+  @@index([eventType, createdAt])
+  @@index([materialId, eventType])
+  @@map("material_events")
+}
+
+model SavedMaterial {
+  userId     Int      @map("user_id")
+  materialId Int      @map("material_id")
+  savedAt    DateTime @default(now()) @map("saved_at") @db.Timestamptz(6)
+
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  material Material @relation(fields: [materialId], references: [id], onDelete: Cascade)
+
+  @@id([userId, materialId])
+  @@index([materialId])
+  @@index([userId, savedAt(sort: Desc)])
+  @@map("saved_materials")
+}
+
+model UserProgram {
+  userId         Int    @map("user_id")
+  programId      Int    @map("program_id")
+  groupName      String @map("group_name") @db.VarChar(32)
+  enrollmentYear Int    @map("enrollment_year")
+
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  program Program @relation(fields: [programId], references: [id], onDelete: Cascade)
+
+  @@id([userId, programId])
+  @@index([programId])
+  @@map("user_programs")
+}
