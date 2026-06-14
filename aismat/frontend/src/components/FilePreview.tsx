@@ -1,6 +1,8 @@
 import { Download, Eye, FileQuestion, Maximize2 } from 'lucide-react';
 import { useState } from 'react';
 
+import { serverUrl } from '../config';
+
 interface Props {
   materialId: number;
   mimeType: string;
@@ -34,7 +36,7 @@ function readableMime(mime: string): string {
 }
 
 export function FilePreview({ materialId, mimeType, fileName, fileSize }: Props): JSX.Element {
-  const url = `/api/materials/${materialId}/file`;
+  const url = serverUrl(`/api/materials/${materialId}/file`);
   const kind = detectKind(mimeType);
   const sizeKb = (fileSize / 1024).toFixed(1);
   const [imgError, setImgError] = useState(false);

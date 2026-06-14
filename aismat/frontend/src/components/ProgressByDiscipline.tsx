@@ -21,7 +21,7 @@ export function ProgressByDiscipline({ data, loading }: Props): JSX.Element {
           ))}
         </div>
       ) : data.length === 0 ? (
-        <p className="text-sm italic text-mint-600 dark:text-mint-400">
+        <p className="text-sm italic text-mint-600 dark:text-mint-300">
           Немає дисциплін з матеріалами.
         </p>
       ) : (

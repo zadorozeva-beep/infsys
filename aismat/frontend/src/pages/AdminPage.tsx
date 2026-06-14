@@ -28,8 +28,8 @@ export function AdminPage(): JSX.Element {
           <Shield size={22} strokeWidth={2.5} />
         </span>
         <div>
-          <h1 className="font-display text-3xl font-extrabold text-mint-900">Адміністрування</h1>
-          <p className="text-sm text-mint-700/80">
+          <h1 className="font-display text-3xl font-extrabold text-mint-900 dark:text-mint-100">Адміністрування</h1>
+          <p className="text-sm text-mint-700/80 dark:text-mint-300">
             Керування користувачами, ролями та довідниками системи
           </p>
         </div>
@@ -130,17 +130,17 @@ function UsersTab(): JSX.Element {
           <tbody className="divide-y divide-mint-100">
             {data?.map((u) => (
               <tr key={u.id} className="transition hover:bg-mint-50/50">
-                <td className="px-4 py-3 font-mono text-xs text-mint-700">#{u.id}</td>
+                <td className="px-4 py-3 font-mono text-xs text-mint-700 dark:text-mint-300">#{u.id}</td>
                 <td className="px-4 py-3">
                   <div className="flex items-center gap-2">
                     <span className="inline-flex h-8 w-8 items-center justify-center rounded-xl bg-mint-gradient text-xs font-bold text-white">
                       {u.fullName.charAt(0).toUpperCase()}
                     </span>
-                    <span className="font-mono font-semibold text-mint-900">{u.login}</span>
+                    <span className="font-mono font-semibold text-mint-900 dark:text-mint-100">{u.login}</span>
                   </div>
                 </td>
-                <td className="px-4 py-3 text-slate-800">{u.fullName}</td>
-                <td className="px-4 py-3 text-slate-600">{u.email}</td>
+                <td className="px-4 py-3 text-slate-800 dark:text-slate-200">{u.fullName}</td>
+                <td className="px-4 py-3 text-slate-600 dark:text-slate-300">{u.email}</td>
                 <td className="px-4 py-3">
                   <span
                     className={`mr-2 rounded-full px-2 py-0.5 text-[10px] font-bold uppercase ring-1 ring-inset ${roleBadgeClass(
@@ -239,8 +239,8 @@ function DisciplinesTab(): JSX.Element {
               <tbody className="divide-y divide-mint-100">
                 {data?.map((d) => (
                   <tr key={d.id} className="transition hover:bg-mint-50/50">
-                    <td className="px-4 py-3 font-mono font-semibold text-mint-700">{d.code}</td>
-                    <td className="px-4 py-3 text-slate-800">{d.name}</td>
+                    <td className="px-4 py-3 font-mono font-semibold text-mint-700 dark:text-mint-300">{d.code}</td>
+                    <td className="px-4 py-3 text-slate-800 dark:text-slate-200">{d.name}</td>
                     <td className="px-4 py-3">
                       <span className="inline-flex items-center rounded-full bg-mint-100 px-2.5 py-0.5 text-xs font-bold text-mint-700 ring-1 ring-inset ring-mint-200">
                         {String(d.credits)} ECTS
@@ -265,7 +265,7 @@ function DisciplinesTab(): JSX.Element {
       </div>
 
       <form onSubmit={handleCreate} className="card-glow flex flex-col gap-3">
-        <h3 className="font-display text-base font-bold text-mint-900">Додати дисципліну</h3>
+        <h3 className="font-display text-base font-bold text-mint-900 dark:text-mint-100">Додати дисципліну</h3>
         <div>
           <label className="label">Назва</label>
           <input

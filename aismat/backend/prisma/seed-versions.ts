@@ -11,13 +11,18 @@ const VERSION_NOTES = [
   'Оновлено приклади під TypeScript 5.4',
   'Додано розділ про edge-cases',
   'Розширено опис, додано посилання на джерела',
+  'Оновлено схему під Docker Compose v2',
+  'Додано приклади з OWASP Top 10 (2021)',
+  'Уточнено діаграму моделі OSI',
+  'Додано блок про юніт-тести на Vitest',
+  'Приведено код у відповідність до ESLint-правил проєкту',
 ];
 
 async function main(): Promise<void> {
   const materials = await prisma.material.findMany({
     where: { deletedAt: null },
     orderBy: { id: 'asc' },
-    take: 5,
+    take: 8,
     select: { id: true, title: true, description: true, fileUrl: true, fileSize: true, mimeType: true, authorId: true, currentVersion: true },
   });
 
@@ -29,7 +34,7 @@ async function main(): Promise<void> {
 
   let created = 0;
   for (const m of materials) {
-    // Створимо 1-2 додаткові версії для кожного з перших 5 матеріалів
+    // Створимо 1-2 додаткові версії для кожного з перших 8 матеріалів
     const extraVersions = 1 + Math.floor(Math.random() * 2);
 
     for (let i = 0; i < extraVersions; i++) {

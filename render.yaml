@@ -1,0 +1,35 @@
+# Render Blueprint — бекенд АІС (Express + Prisma + PostgreSQL).
+# Імпорт: Render → New → Blueprint → обрати цей репозиторій.
+# Базу даних створюємо окремо в Neon і вписуємо DATABASE_URL у змінні нижче.
+services:
+  - type: web
+    name: aismat-backend
+    runtime: node
+    plan: free
+    rootDir: aismat/backend
+    buildCommand: npm install && npx prisma generate && npm run build
+    startCommand: npx prisma migrate deploy && node dist/server.js
+    healthCheckPath: /health
+    autoDeploy: true
+    envVars:
+      - key: NODE_ENV
+        value: production
+      # Рядок підключення з Neon (Pooled connection) — задати вручну в дашборді.
+      - key: DATABASE_URL
+        sync: false
+      # Секрет для JWT (≥32 символи) — задати вручну.
+      - key: JWT_SECRET
+        sync: false
+      # Домен фронтенду з Vercel, напр. https://aismat.vercel.app — задати вручну.
+      - key: CORS_ORIGIN
+        sync: false
+      - key: JWT_EXPIRES_IN
+        value: 24h
+      - key: BCRYPT_ROUNDS
+        value: "12"
+      - key: UPLOAD_DIR
+        value: ./uploads
+      - key: MAX_FILE_SIZE_MB
+        value: "50"
+      - key: LOG_LEVEL
+        value: info

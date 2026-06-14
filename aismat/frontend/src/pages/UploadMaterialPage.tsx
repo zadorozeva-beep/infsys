@@ -82,10 +82,10 @@ export function UploadMaterialPage(): JSX.Element {
           <UploadIcon size={22} strokeWidth={2.5} />
         </span>
         <div>
-          <h1 className="font-display text-3xl font-extrabold text-mint-900">
+          <h1 className="font-display text-3xl font-extrabold text-mint-900 dark:text-mint-100">
             Завантажити матеріал
           </h1>
-          <p className="text-sm text-mint-700/80">
+          <p className="text-sm text-mint-700/80 dark:text-mint-300">
             Додайте лекцію, методичку, презентацію або тест до бібліотеки
           </p>
         </div>
@@ -146,7 +146,7 @@ export function UploadMaterialPage(): JSX.Element {
           <label className="label" htmlFor="tags">Теги (через кому)</label>
           <input id="tags" className="input" placeholder="react, typescript" {...register('tags')} />
           {tagsQ.data && tagsQ.data.length > 0 && (
-            <p className="mt-1.5 text-xs text-mint-700/80">
+            <p className="mt-1.5 text-xs text-mint-700/80 dark:text-mint-300">
               Існуючі: <span className="font-mono">{tagsQ.data.map((t) => t.slug).join(', ')}</span>
             </p>
           )}
@@ -182,11 +182,11 @@ export function UploadMaterialPage(): JSX.Element {
                 <span className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-mint-gradient text-white shadow-mint">
                   <FileCheck2 size={22} strokeWidth={2.5} />
                 </span>
-                <span className="font-semibold text-mint-900">{file.name}</span>
-                <span className="text-xs text-mint-700/70">
+                <span className="font-semibold text-mint-900 dark:text-mint-100">{file.name}</span>
+                <span className="text-xs text-mint-700/70 dark:text-mint-300">
                   {(file.size / 1024).toFixed(1)} KB · {file.type || 'unknown'}
                 </span>
-                <span className="text-xs font-semibold text-mint-600 underline-offset-4 hover:underline">
+                <span className="text-xs font-semibold text-mint-600 dark:text-mint-300 underline-offset-4 hover:underline">
                   Замінити файл
                 </span>
               </>
@@ -195,10 +195,10 @@ export function UploadMaterialPage(): JSX.Element {
                 <span className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-mint-100 text-mint-600">
                   <CloudUpload size={24} strokeWidth={2.5} />
                 </span>
-                <span className="font-semibold text-mint-900">
+                <span className="font-semibold text-mint-900 dark:text-mint-100">
                   Перетягніть файл сюди або клацніть, щоб обрати
                 </span>
-                <span className="text-xs text-mint-700/70">
+                <span className="text-xs text-mint-700/70 dark:text-mint-300">
                   PDF, DOCX, PPTX, XLSX, MP4, PNG, JPG — до 50 MB
                 </span>
               </>

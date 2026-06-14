@@ -1,8 +1,7 @@
 import axios, { type AxiosError, type AxiosInstance } from 'axios';
 
+import { API_BASE_URL } from '../config';
 import { clearStoredAuth, getStoredToken } from '../store/auth.store';
-
-const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL as string | undefined) ?? '/api';
 
 export const api: AxiosInstance = axios.create({
   baseURL: API_BASE_URL,

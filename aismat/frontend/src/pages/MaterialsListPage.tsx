@@ -162,8 +162,8 @@ export function MaterialsListPage(): JSX.Element {
               <span className="inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-mint-100 text-mint-600">
                 <Inbox size={32} strokeWidth={2} />
               </span>
-              <h3 className="font-display text-lg font-bold text-mint-900">Нічого не знайдено</h3>
-              <p className="max-w-md text-sm text-slate-600">
+              <h3 className="font-display text-lg font-bold text-mint-900 dark:text-mint-100">Нічого не знайдено</h3>
+              <p className="max-w-md text-sm text-slate-600 dark:text-slate-300">
                 Спробуйте змінити пошуковий запит, обрати інші фільтри або скинути всі параметри.
               </p>
               <button onClick={resetFilters} className="btn-secondary mt-2">

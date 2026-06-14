@@ -170,7 +170,7 @@ export function CommentsSection({ materialId }: Props): JSX.Element {
       </ul>
 
       {typingNames.length > 0 && (
-        <div className="flex items-center gap-2 text-xs italic text-mint-600 dark:text-mint-400">
+        <div className="flex items-center gap-2 text-xs italic text-mint-600 dark:text-mint-300">
           <TypingDots />
           {typingNames.length === 1
             ? `${typingNames[0]} друкує...`
@@ -195,7 +195,7 @@ export function CommentsSection({ materialId }: Props): JSX.Element {
             maxLength={2000}
           />
           <div className="flex items-center justify-between">
-            <span className="text-xs text-mint-600 dark:text-mint-400">
+            <span className="text-xs text-mint-600 dark:text-mint-300">
               {content.length} / 2000
             </span>
             <button
@@ -265,7 +265,7 @@ function CommentItem({
                 />
               )}
             </span>
-            <span className="text-[11px] text-mint-600 dark:text-mint-400">
+            <span className="text-[11px] text-mint-600 dark:text-mint-300">
               {new Date(comment.createdAt).toLocaleString('uk-UA')}
             </span>
           </div>
@@ -310,7 +310,7 @@ function ConnectionIndicator({
   return (
     <span
       title="Реалтайм-канал не активний"
-      className="inline-flex items-center gap-1 rounded-full bg-slate-100 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:bg-mint-900/50 dark:text-mint-500"
+      className="inline-flex items-center gap-1 rounded-full bg-slate-100 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:bg-mint-900/50 dark:text-mint-300"
     >
       <WifiOff size={10} strokeWidth={2.5} /> Offline
     </span>

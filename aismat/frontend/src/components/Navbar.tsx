@@ -3,7 +3,6 @@ import { Link, NavLink, useNavigate } from 'react-router-dom';
 
 import { NotificationBell } from './NotificationBell';
 import { ThemePicker } from './ThemePicker';
-import { ThemeToggle } from './ThemeToggle';
 import { useAuth } from '../hooks/useAuth';
 
 export function Navbar(): JSX.Element {
@@ -52,7 +51,7 @@ export function Navbar(): JSX.Element {
             <span className="bg-gradient-to-r from-mint-700 to-mint-500 bg-clip-text text-transparent dark:from-mint-300 dark:to-mint-100">
               АІС
             </span>
-            <span className="text-[11px] font-medium uppercase tracking-widest text-mint-600/80 dark:text-mint-300/80">
+            <span className="text-[11px] font-medium uppercase tracking-widest text-mint-600/80 dark:text-mint-200">
               навчальні матеріали
             </span>
           </span>
@@ -100,7 +99,6 @@ export function Navbar(): JSX.Element {
           </button>
           <NotificationBell />
           <ThemePicker />
-          <ThemeToggle />
 
           {isAuthenticated ? (
             <div className="ml-3 flex items-center gap-3">
@@ -111,7 +109,7 @@ export function Navbar(): JSX.Element {
               >
                 <div className="hidden flex-col items-end leading-tight md:flex">
                   <span className="text-sm font-semibold text-mint-900 dark:text-mint-100">{user?.fullName}</span>
-                  <span className="text-[10px] font-bold uppercase tracking-wider text-mint-600 dark:text-mint-400">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-mint-600 dark:text-mint-300">
                     {roleLabel(user?.role)}
                   </span>
                 </div>

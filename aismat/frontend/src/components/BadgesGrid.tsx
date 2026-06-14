@@ -76,7 +76,7 @@ export function BadgesGrid({ data, loading }: Props): JSX.Element {
                   <Lock
                     size={10}
                     strokeWidth={3}
-                    className="absolute -bottom-0.5 -right-0.5 rounded-full bg-mint-100 p-0.5 text-mint-500 dark:bg-mint-950 dark:text-mint-400"
+                    className="absolute -bottom-0.5 -right-0.5 rounded-full bg-mint-100 p-0.5 text-mint-500 dark:bg-mint-950 dark:text-mint-300"
                   />
                 )}
               </div>

@@ -399,7 +399,7 @@ function KanbanColumn({
 
 function EmptyHint(): JSX.Element {
   return (
-    <div className="pointer-events-none flex h-24 items-center justify-center rounded-2xl border-2 border-dashed border-mint-200 text-xs italic text-mint-500 dark:border-mint-800 dark:text-mint-500">
+    <div className="pointer-events-none flex h-24 items-center justify-center rounded-2xl border-2 border-dashed border-mint-200 text-xs italic text-mint-500 dark:border-mint-800 dark:text-mint-300">
       Перетягніть сюди
     </div>
   );
@@ -462,7 +462,7 @@ function KanbanCard({
         <span className="rounded-full bg-mint-100 px-2 py-0.5 text-mint-700 ring-1 ring-inset ring-mint-200 dark:bg-mint-800/60 dark:text-mint-200 dark:ring-mint-700">
           {item.material.materialType.name}
         </span>
-        <span className="text-mint-700/80 dark:text-mint-400">
+        <span className="text-mint-700/80 dark:text-mint-300">
           {item.material.discipline.code}
         </span>
       </div>

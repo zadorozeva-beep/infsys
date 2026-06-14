@@ -116,7 +116,7 @@ export function NotificationBell(): JSX.Element | null {
 
           <div className="max-h-[60vh] overflow-y-auto p-2">
             {items.length === 0 ? (
-              <div className="px-4 py-8 text-center text-sm text-mint-600 dark:text-mint-400">
+              <div className="px-4 py-8 text-center text-sm text-mint-600 dark:text-mint-300">
                 Сповіщень ще немає
               </div>
             ) : (
@@ -182,7 +182,7 @@ function NotificationItem({
           {notification.title}
         </div>
         {notification.body && (
-          <div className="mt-0.5 line-clamp-2 text-xs text-mint-700 dark:text-mint-400">
+          <div className="mt-0.5 line-clamp-2 text-xs text-mint-700 dark:text-mint-300">
             {notification.body}
           </div>
         )}

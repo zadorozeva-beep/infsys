@@ -54,7 +54,7 @@ export function ThemePicker(): JSX.Element {
 
       {open && (
         <div className="absolute right-0 top-12 z-50 w-[280px] origin-top-right overflow-hidden rounded-3xl border border-white/60 bg-white/95 p-3 shadow-mint-lg backdrop-blur-xl animate-fade-up dark:border-mint-700 dark:bg-mint-950/95">
-          <h3 className="mb-2 px-1 text-[10px] font-bold uppercase tracking-widest text-mint-600 dark:text-mint-400">
+          <h3 className="mb-2 px-1 text-[10px] font-bold uppercase tracking-widest text-mint-600 dark:text-mint-300">
             Колір акценту
           </h3>
           <div className="grid grid-cols-3 gap-2">
@@ -101,7 +101,7 @@ export function ThemePicker(): JSX.Element {
               );
             })}
           </div>
-          <p className="mt-3 px-1 text-[10px] leading-snug text-mint-600 dark:text-mint-400">
+          <p className="mt-3 px-1 text-[10px] leading-snug text-mint-600 dark:text-mint-300">
             Поєднується зі світлою / темною темою. Зберігається у вашому браузері.
           </p>
         </div>

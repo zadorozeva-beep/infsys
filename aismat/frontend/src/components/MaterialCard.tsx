@@ -46,7 +46,7 @@ export function MaterialCard({ material }: Props): JSX.Element {
             {material.materialType.name}
           </span>
           <div className="flex items-center gap-1.5">
-            <span className="mr-1 inline-flex items-center gap-1 text-xs font-semibold text-mint-700/70 dark:text-mint-400">
+            <span className="mr-1 inline-flex items-center gap-1 text-xs font-semibold text-mint-700/70 dark:text-mint-300">
               <Download size={12} strokeWidth={2.5} />
               {material.downloadCount}
             </span>
@@ -60,7 +60,7 @@ export function MaterialCard({ material }: Props): JSX.Element {
         </h3>
 
         {material.description && (
-          <p className="line-clamp-3 text-sm text-slate-600 dark:text-mint-300/80">{material.description}</p>
+          <p className="line-clamp-3 text-sm text-slate-600 dark:text-mint-200">{material.description}</p>
         )}
 
         <div className="mt-auto flex flex-wrap gap-1.5">
@@ -79,7 +79,7 @@ export function MaterialCard({ material }: Props): JSX.Element {
           )}
         </div>
 
-        <div className="mt-1 flex items-center justify-between gap-2 border-t border-mint-100 pt-3 text-xs text-mint-700/80 dark:border-mint-800/60 dark:text-mint-300/80">
+        <div className="mt-1 flex items-center justify-between gap-2 border-t border-mint-100 pt-3 text-xs text-mint-700/80 dark:border-mint-800/60 dark:text-mint-200">
           <span className="inline-flex max-w-[55%] items-center gap-1.5 truncate">
             <BookOpen size={12} strokeWidth={2.5} />
             <span className="truncate">{material.discipline.name}</span>

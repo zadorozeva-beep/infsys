@@ -19,6 +19,7 @@ import {
   uploadNewVersion,
   type MaterialVersion,
 } from '../api/versions.api';
+import { serverUrl } from '../config';
 import { useAuth } from '../hooks/useAuth';
 import { useToast } from '../store/toast.store';
 
@@ -64,7 +65,7 @@ export function VersionsTab({ materialId, authorId }: Props): JSX.Element {
           <span className="inline-flex items-center gap-1.5 rounded-full bg-mint-100 px-3 py-1 font-bold text-mint-700 dark:bg-mint-800/60 dark:text-mint-200">
             <GitBranch size={13} strokeWidth={2.5} /> Поточна версія: v{currentVersion}
           </span>
-          <span className="text-xs text-mint-600 dark:text-mint-400">
+          <span className="text-xs text-mint-600 dark:text-mint-300">
             Усього в історії: {versions.length}
           </span>
         </div>
@@ -114,7 +115,7 @@ function VersionRow({
   isLatest: boolean;
   materialId: number;
 }): JSX.Element {
-  const fileUrl = `/api/materials/${materialId}/versions/${v.version}/file`;
+  const fileUrl = serverUrl(`/api/materials/${materialId}/versions/${v.version}/file`);
   const sizeKb = (v.fileSize / 1024).toFixed(1);
 
   const diffs = computeDiff(v, previous);
@@ -148,7 +149,7 @@ function VersionRow({
                 </span>
               )}
             </h4>
-            <div className="mt-1 flex flex-wrap items-center gap-3 text-xs text-mint-700 dark:text-mint-400">
+            <div className="mt-1 flex flex-wrap items-center gap-3 text-xs text-mint-700 dark:text-mint-300">
               <span className="inline-flex items-center gap-1">
                 <User size={11} strokeWidth={2.5} /> {v.uploader.fullName}
               </span>
@@ -181,7 +182,7 @@ function VersionRow({
           <ul className="flex flex-col gap-1 text-xs">
             {diffs.map((d, i) => (
               <li key={i} className="flex items-start gap-1.5">
-                <span className="mt-0.5 font-bold text-mint-600 dark:text-mint-400">→</span>
+                <span className="mt-0.5 font-bold text-mint-600 dark:text-mint-300">→</span>
                 <span className="text-mint-800 dark:text-mint-200">{d}</span>
               </li>
             ))}
@@ -337,7 +338,7 @@ function UploadVersionModal({
               value={changeNote}
               onChange={(e) => setChangeNote(e.target.value)}
             />
-            <p className="mt-1 text-xs text-mint-600 dark:text-mint-400">
+            <p className="mt-1 text-xs text-mint-600 dark:text-mint-300">
               {changeNote.length} / 500
             </p>
           </div>
@@ -375,7 +376,7 @@ function UploadVersionModal({
                   <span className="text-sm font-semibold text-mint-900 dark:text-mint-100">
                     {file.name}
                   </span>
-                  <span className="text-xs text-mint-700/70 dark:text-mint-400">
+                  <span className="text-xs text-mint-700/70 dark:text-mint-300">
                     {(file.size / 1024).toFixed(1)} KB
                   </span>
                 </>

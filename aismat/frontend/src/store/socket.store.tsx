@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useRef, useState } from 'react';
 import { io, type Socket } from 'socket.io-client';
 
+import { SERVER_ORIGIN } from '../config';
 import { useAuth } from '../hooks/useAuth';
 
 interface SocketContextValue {
@@ -27,7 +28,9 @@ export function SocketProvider({ children }: { children: React.ReactNode }): JSX
       return;
     }
 
-    const socket = io({
+    // Локально SERVER_ORIGIN === '' → підключення до origin сторінки (проксі Vite).
+    // У проді → пряме підключення до бекенду на Render.
+    const socket = io(SERVER_ORIGIN || undefined, {
       path: '/socket.io',
       auth: { token },
       transports: ['websocket', 'polling'],

@@ -72,7 +72,7 @@ export function ProfilePage(): JSX.Element {
     <div className="flex flex-col gap-8">
       <ProfileHero user={user} roleLabel={roleLabel} stats={statsQ.data} canUpload={canUpload} />
 
-      <div className="inline-flex flex-wrap gap-1 self-start rounded-2xl bg-white/60 p-1 shadow-soft backdrop-blur ring-1 ring-mint-200">
+      <div className="inline-flex flex-wrap gap-1 self-start rounded-2xl bg-white/60 p-1 shadow-soft backdrop-blur ring-1 ring-mint-200 dark:bg-mint-900/60 dark:ring-mint-700">
         <TabButton active={tab === 'overview'} onClick={() => setTab('overview')}>
           <LayoutDashboard size={15} strokeWidth={2.5} /> Огляд
         </TabButton>
@@ -212,7 +212,7 @@ function TabButton({
     <button
       onClick={onClick}
       className={`inline-flex items-center gap-1.5 rounded-xl px-4 py-2 text-sm font-semibold transition ${
-        active ? 'bg-mint-gradient text-white shadow-mint' : 'text-mint-800 hover:bg-mint-50'
+        active ? 'bg-mint-gradient text-white shadow-mint' : 'text-mint-800 hover:bg-mint-50 dark:text-mint-200 dark:hover:bg-mint-800/60'
       }`}
     >
       {children}
@@ -287,11 +287,11 @@ function OverviewSection({
 
       {/* Останні збережені */}
       <div className="card flex flex-col gap-3">
-        <h2 className="inline-flex items-center gap-2 font-display text-base font-bold text-mint-900">
+        <h2 className="inline-flex items-center gap-2 font-display text-base font-bold text-mint-900 dark:text-mint-100">
           <Activity size={16} strokeWidth={2.5} /> Останні збережені
         </h2>
         {stats.recentSaved.length === 0 ? (
-          <p className="text-sm italic text-slate-500">Ви ще нічого не зберігали.</p>
+          <p className="text-sm italic text-slate-500 dark:text-slate-400">Ви ще нічого не зберігали.</p>
         ) : (
           <ul className="divide-y divide-mint-100">
             {stats.recentSaved.map((row) => (
@@ -301,11 +301,11 @@ function OverviewSection({
               >
                 <Link
                   to={`/materials/${row.material.id}`}
-                  className="line-clamp-1 flex-1 font-semibold text-mint-900 hover:text-mint-700"
+                  className="line-clamp-1 flex-1 font-semibold text-mint-900 dark:text-mint-100 hover:text-mint-700"
                 >
                   {row.material.title}
                 </Link>
-                <span className="text-xs text-mint-600">
+                <span className="text-xs text-mint-600 dark:text-mint-300">
                   {new Date(row.savedAt).toLocaleString('uk-UA', {
                     day: '2-digit',
                     month: '2-digit',
@@ -322,11 +322,11 @@ function OverviewSection({
       {/* Топ власні (тільки для teacher/admin) */}
       {canUpload && (
         <div className="card flex flex-col gap-3">
-          <h2 className="inline-flex items-center gap-2 font-display text-base font-bold text-mint-900">
+          <h2 className="inline-flex items-center gap-2 font-display text-base font-bold text-mint-900 dark:text-mint-100">
             <Sparkles size={16} strokeWidth={2.5} /> Найпопулярніші мої матеріали
           </h2>
           {stats.topOwnByDownloads.length === 0 ? (
-            <p className="text-sm italic text-slate-500">Ви ще не завантажували матеріалів.</p>
+            <p className="text-sm italic text-slate-500 dark:text-slate-400">Ви ще не завантажували матеріалів.</p>
           ) : (
             <ul className="flex flex-col gap-2">
               {stats.topOwnByDownloads.map((m, i) => {
@@ -337,12 +337,12 @@ function OverviewSection({
                     <div className="mb-1.5 flex items-center justify-between gap-3 text-sm">
                       <Link
                         to={`/materials/${m.id}`}
-                        className="line-clamp-1 flex-1 font-semibold text-mint-900 hover:text-mint-700"
+                        className="line-clamp-1 flex-1 font-semibold text-mint-900 dark:text-mint-100 hover:text-mint-700"
                       >
                         <span className="mr-1 font-mono text-xs text-mint-500">#{i + 1}</span>
                         {m.title}
                       </Link>
-                      <span className="inline-flex items-center gap-1 text-xs font-bold text-mint-700">
+                      <span className="inline-flex items-center gap-1 text-xs font-bold text-mint-700 dark:text-mint-300">
                         <Download size={12} strokeWidth={2.5} /> {m.downloadCount}
                       </span>
                     </div>
@@ -353,7 +353,7 @@ function OverviewSection({
                           style={{ width: `${pct}%` }}
                         />
                       </div>
-                      <span className="text-[11px] text-mint-600">{m.discipline.name}</span>
+                      <span className="text-[11px] text-mint-600 dark:text-mint-300">{m.discipline.name}</span>
                     </div>
                   </li>
                 );
@@ -386,11 +386,11 @@ function StatCard({
       >
         {icon}
       </div>
-      <div className="text-[11px] font-bold uppercase tracking-wider text-mint-600 dark:text-mint-400">{label}</div>
+      <div className="text-[11px] font-bold uppercase tracking-wider text-mint-600 dark:text-mint-300">{label}</div>
       <div className="line-clamp-1 font-display text-2xl font-extrabold text-mint-900 dark:text-mint-100">
         {typeof value === 'number' ? <CountUp value={value} /> : value}
       </div>
-      {subValue && <div className="text-xs text-mint-600 dark:text-mint-400">{subValue}</div>}
+      {subValue && <div className="text-xs text-mint-600 dark:text-mint-300">{subValue}</div>}
     </div>
   );
 }
@@ -470,7 +470,7 @@ function SettingsSection(): JSX.Element {
         className="card-glow flex flex-col gap-4"
         noValidate
       >
-        <h2 className="inline-flex items-center gap-2 font-display text-base font-bold text-mint-900">
+        <h2 className="inline-flex items-center gap-2 font-display text-base font-bold text-mint-900 dark:text-mint-100">
           <UserIcon size={16} strokeWidth={2.5} /> Особисті дані
         </h2>
 
@@ -527,7 +527,7 @@ function SettingsSection(): JSX.Element {
         className="card-glow flex flex-col gap-4"
         noValidate
       >
-        <h2 className="inline-flex items-center gap-2 font-display text-base font-bold text-mint-900">
+        <h2 className="inline-flex items-center gap-2 font-display text-base font-bold text-mint-900 dark:text-mint-100">
           <KeyRound size={16} strokeWidth={2.5} /> Зміна паролю
         </h2>
 
@@ -622,10 +622,10 @@ function SavedSection({
         <span className="inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-mint-100 text-mint-600">
           <Inbox size={32} strokeWidth={2} />
         </span>
-        <h3 className="font-display text-lg font-bold text-mint-900">
+        <h3 className="font-display text-lg font-bold text-mint-900 dark:text-mint-100">
           У вас ще немає збережених матеріалів
         </h3>
-        <p className="max-w-md text-sm text-slate-600">
+        <p className="max-w-md text-sm text-slate-600 dark:text-slate-300">
           Тицяйте на іконку{' '}
           <Bookmark size={14} strokeWidth={2.5} className="mb-0.5 inline-block" /> у карток
           матеріалів, щоб додати їх сюди.
@@ -679,10 +679,10 @@ function OwnSection({
         <span className="inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-mint-100 text-mint-600">
           <FolderOpen size={32} strokeWidth={2} />
         </span>
-        <h3 className="font-display text-lg font-bold text-mint-900">
+        <h3 className="font-display text-lg font-bold text-mint-900 dark:text-mint-100">
           Ви ще не завантажували матеріалів
         </h3>
-        <p className="max-w-md text-sm text-slate-600">
+        <p className="max-w-md text-sm text-slate-600 dark:text-slate-300">
           Завантажте першу лекцію, методичку або презентацію — вона з'явиться тут.
         </p>
         <Link to="/upload" className="btn-primary mt-2">

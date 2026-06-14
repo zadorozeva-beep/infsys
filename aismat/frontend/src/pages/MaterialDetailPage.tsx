@@ -17,6 +17,7 @@ import { useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 
 import { deleteMaterial, getMaterial } from '../api/materials.api';
+import { serverUrl } from '../config';
 import { AddToPlanButton } from '../components/AddToPlanButton';
 import { CommentsSection } from '../components/CommentsSection';
 import { FilePreview } from '../components/FilePreview';
@@ -60,7 +61,7 @@ export function MaterialDetailPage(): JSX.Element {
   if (isError || !data) {
     return (
       <div className="card flex flex-col items-center gap-3 py-12 text-center">
-        <h3 className="font-display text-lg font-bold text-mint-900">Матеріал не знайдено</h3>
+        <h3 className="font-display text-lg font-bold text-mint-900 dark:text-mint-100">Матеріал не знайдено</h3>
         <Link to="/" className="btn-secondary">
           <ArrowLeft size={16} /> Повернутися до списку
         </Link>
@@ -68,7 +69,7 @@ export function MaterialDetailPage(): JSX.Element {
     );
   }
 
-  const fileUrl = `/api/materials/${data.id}/file`;
+  const fileUrl = serverUrl(`/api/materials/${data.id}/file`);
   const sizeKb = (data.fileSize / 1024).toFixed(1);
 
   return (
@@ -148,7 +149,7 @@ export function MaterialDetailPage(): JSX.Element {
                 </p>
               </>
             ) : (
-              <p className="text-sm italic text-slate-500 dark:text-mint-400">Опис відсутній</p>
+              <p className="text-sm italic text-slate-500 dark:text-mint-300">Опис відсутній</p>
             )}
 
             {data.tags.length > 0 && (
@@ -175,14 +176,14 @@ export function MaterialDetailPage(): JSX.Element {
             <dl className="flex flex-col gap-3 text-sm">
               <InfoRow icon={<BookOpen size={14} strokeWidth={2.5} />} label="Дисципліна">
                 <div className="font-semibold text-mint-900 dark:text-mint-100">{data.discipline.name}</div>
-                <div className="font-mono text-xs text-mint-600 dark:text-mint-400">{data.discipline.code}</div>
+                <div className="font-mono text-xs text-mint-600 dark:text-mint-300">{data.discipline.code}</div>
               </InfoRow>
               <InfoRow icon={<FileType size={14} strokeWidth={2.5} />} label="Тип">
                 {data.materialType.name}
               </InfoRow>
               <InfoRow icon={<HardDrive size={14} strokeWidth={2.5} />} label="Розмір">
                 {sizeKb} KB
-                <div className="font-mono text-xs text-mint-600 dark:text-mint-400">{data.mimeType}</div>
+                <div className="font-mono text-xs text-mint-600 dark:text-mint-300">{data.mimeType}</div>
               </InfoRow>
               <InfoRow icon={<Calendar size={14} strokeWidth={2.5} />} label="Створено">
                 {new Date(data.createdAt).toLocaleString('uk-UA')}
@@ -233,10 +234,10 @@ function InfoRow({
 }): JSX.Element {
   return (
     <div>
-      <dt className="mb-0.5 inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-mint-600">
+      <dt className="mb-0.5 inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-mint-600 dark:text-mint-300">
         {icon} {label}
       </dt>
-      <dd className="text-slate-800">{children}</dd>
+      <dd className="text-slate-800 dark:text-slate-200">{children}</dd>
     </div>
   );
 }

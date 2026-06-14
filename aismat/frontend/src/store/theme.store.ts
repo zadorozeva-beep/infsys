@@ -33,14 +33,9 @@ const ACCENTS: ReadonlySet<Accent> = new Set([
   'lavender',
 ]);
 
+// Перемикання світла/темна теми прибрано — додаток завжди в темній темі.
 export function readStoredMode(): Mode {
-  try {
-    const stored = localStorage.getItem(MODE_KEY);
-    if (stored === 'dark' || stored === 'light') return stored;
-    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-  } catch {
-    return 'light';
-  }
+  return 'dark';
 }
 
 export function readStoredAccent(): Accent {
@@ -53,10 +48,10 @@ export function readStoredAccent(): Accent {
   return 'mint';
 }
 
-function applyThemeToHtml(mode: Mode, accent: Accent): void {
+function applyThemeToHtml(_mode: Mode, accent: Accent): void {
   const root = document.documentElement;
-  if (mode === 'dark') root.classList.add('dark');
-  else root.classList.remove('dark');
+  // Тема завжди темна — світлий режим прибрано.
+  root.classList.add('dark');
   root.setAttribute('data-theme', accent);
 }
 

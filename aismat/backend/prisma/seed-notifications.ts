@@ -18,33 +18,54 @@ async function main(): Promise<void> {
     process.exit(1);
   }
 
-  const someMaterial = await prisma.material.findFirst({ select: { id: true } });
-  const link = someMaterial ? `/materials/${someMaterial.id}` : '/';
+  // Беремо кілька реальних матеріалів, щоб сповіщення вели на різні сторінки
+  const materials = await prisma.material.findMany({
+    select: { id: true, title: true },
+    orderBy: { id: 'asc' },
+    take: 10,
+  });
+  const linkFor = (i: number): string =>
+    materials.length > 0 ? `/materials/${materials[i % materials.length]!.id}` : '/';
 
-  // 2 непрочитаних + 1 прочитана для кожного студента
+  // Кілька непрочитаних + 1 прочитана для кожного студента.
+  // Теми охоплюють як старі, так і нові дисципліни (мережі, безпека, Docker, тестування).
   for (const s of students) {
     await prisma.notification.createMany({
       data: [
         {
           userId: s.id,
           type: 'new_material',
-          title: 'Новий матеріал: Лекція 7. Нормалізація БД',
+          title: 'Новий матеріал: Нормалізація реляційних баз даних',
           body: 'Трощій Юлія Георгіївна додала матеріал з дисципліни «Бази даних»',
-          link,
+          link: linkFor(0),
         },
         {
           userId: s.id,
           type: 'new_material',
-          title: 'Новий матеріал: Hooks та контекст у React',
-          body: 'Мацак Тетяна Іванівна додала матеріал з дисципліни «Веб-технології»',
-          link,
+          title: 'Новий матеріал: Контейнеризація застосунків із Docker',
+          body: 'Савченко Ірина Володимирівна додала матеріал з дисципліни «Операційні системи»',
+          link: linkFor(1),
+        },
+        {
+          userId: s.id,
+          type: 'new_material',
+          title: 'Новий матеріал: Найпоширеніші вразливості веб-застосунків (OWASP Top 10)',
+          body: 'Кудінович Дмитро Петрович додав матеріал з дисципліни «Безпека програмного забезпечення»',
+          link: linkFor(2),
+        },
+        {
+          userId: s.id,
+          type: 'new_material',
+          title: 'Новий матеріал: Модель OSI та стек протоколів TCP/IP',
+          body: 'Савченко Ірина Володимирівна додала матеріал з дисципліни «Комп’ютерні мережі»',
+          link: linkFor(3),
         },
         {
           userId: s.id,
           type: 'comment_on_material',
           title: 'Новий коментар до вашого матеріалу',
-          body: 'Студент Іваненко прокоментував лабораторну роботу',
-          link,
+          body: 'Студент Ткаченко прокоментував лабораторну роботу з тестування на Vitest',
+          link: linkFor(4),
           readAt: new Date(),
         },
       ],

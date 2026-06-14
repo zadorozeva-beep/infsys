@@ -6,7 +6,7 @@ import { Navbar } from './Navbar';
 
 export function Layout(): JSX.Element {
   return (
-    <div className="relative flex min-h-screen flex-col overflow-hidden bg-mint-radial">
+    <div className="relative flex min-h-screen flex-col overflow-hidden bg-mint-radial dark:bg-mint-radial-dark">
       {/* Декоративні плаваючі плями фону */}
       <div className="blob -left-32 top-20 h-96 w-96 animate-float-slow bg-mint-300/40" />
       <div className="blob right-[-10rem] top-[40%] h-[28rem] w-[28rem] animate-float-slower bg-teal-200/50" />
@@ -22,10 +22,10 @@ export function Layout(): JSX.Element {
         </div>
       </main>
 
-      <footer className="relative mt-12 border-t border-white/50 bg-white/40 py-6 text-center text-xs text-mint-800/80 backdrop-blur dark:border-mint-800/50 dark:bg-mint-950/40 dark:text-mint-300/80">
+      <footer className="relative mt-12 border-t border-white/50 bg-white/40 py-6 text-center text-xs text-mint-800/80 backdrop-blur dark:border-mint-800/50 dark:bg-mint-950/40 dark:text-mint-200">
         <div className="mx-auto flex max-w-7xl flex-col items-center gap-1 px-4">
           <span className="font-semibold">АІС навчальних матеріалів</span>
-          <span className="text-mint-700/70 dark:text-mint-400/70">
+          <span className="text-mint-700/70 dark:text-mint-300">
             © {new Date().getFullYear()} · Курсовий проєкт · Спеціальність 121 «Інженерія програмного забезпечення»
           </span>
         </div>

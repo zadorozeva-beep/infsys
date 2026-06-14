@@ -6,11 +6,9 @@ import {
   FolderOpen,
   Home,
   LogOut,
-  Moon,
   Search,
   Settings,
   Shield,
-  Sun,
   Upload,
   User as UserIcon,
 } from 'lucide-react';
@@ -20,7 +18,6 @@ import { useNavigate } from 'react-router-dom';
 import { listMaterials } from '../api/materials.api';
 import { useDebounce } from '../hooks/useDebounce';
 import { useAuth } from '../hooks/useAuth';
-import { useTheme } from '../store/theme.store';
 
 interface CommandItem {
   id: string;
@@ -39,7 +36,6 @@ export function CommandPalette(): JSX.Element | null {
 
   const navigate = useNavigate();
   const { user, isAuthenticated, signOut } = useAuth();
-  const { theme, toggleTheme } = useTheme();
 
   const debouncedQuery = useDebounce(query, 200);
 
@@ -87,17 +83,6 @@ export function CommandPalette(): JSX.Element | null {
           setOpen(false);
         },
         group: 'Навігація',
-      },
-      {
-        id: 'toggle-theme',
-        label: theme === 'dark' ? 'Перемкнути на світлу тему' : 'Перемкнути на темну тему',
-        hint: theme === 'dark' ? 'Sun' : 'Moon',
-        icon: theme === 'dark' ? <Sun size={16} strokeWidth={2.5} /> : <Moon size={16} strokeWidth={2.5} />,
-        onSelect: () => {
-          toggleTheme();
-          setOpen(false);
-        },
-        group: 'Дії',
       },
     ];
 
@@ -187,7 +172,7 @@ export function CommandPalette(): JSX.Element | null {
       });
     }
     return acts;
-  }, [isAuthenticated, navigate, signOut, theme, toggleTheme, user]);
+  }, [isAuthenticated, navigate, signOut, user]);
 
   // Фільтрація команд за query
   const filteredActions = useMemo(() => {
@@ -276,7 +261,7 @@ export function CommandPalette(): JSX.Element | null {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Пошук матеріалів і дій..."
-            className="flex-1 bg-transparent text-sm font-medium text-mint-900 placeholder:text-mint-400 focus:outline-none dark:text-mint-50 dark:placeholder:text-mint-500"
+            className="flex-1 bg-transparent text-sm font-medium text-mint-900 placeholder:text-mint-400 focus:outline-none dark:text-mint-50 dark:placeholder:text-mint-300"
           />
           <kbd className="hidden rounded-md border border-mint-200 bg-white/70 px-1.5 py-0.5 font-mono text-[10px] font-semibold text-mint-600 sm:inline-block dark:border-mint-700 dark:bg-mint-900/60 dark:text-mint-300">
             ESC
@@ -285,13 +270,13 @@ export function CommandPalette(): JSX.Element | null {
 
         <div className="max-h-[60vh] overflow-y-auto p-2">
           {allItems.length === 0 ? (
-            <div className="px-4 py-8 text-center text-sm text-mint-600 dark:text-mint-400">
+            <div className="px-4 py-8 text-center text-sm text-mint-600 dark:text-mint-300">
               {materialsQ.isFetching ? 'Шукаю...' : 'Нічого не знайдено'}
             </div>
           ) : (
             Object.entries(grouped).map(([group, items]) => (
               <div key={group} className="mb-2">
-                <div className="px-3 pb-1 pt-2 text-[10px] font-bold uppercase tracking-widest text-mint-500 dark:text-mint-400">
+                <div className="px-3 pb-1 pt-2 text-[10px] font-bold uppercase tracking-widest text-mint-500 dark:text-mint-300">
                   {group}
                 </div>
                 {items.map((item) => {
@@ -323,7 +308,7 @@ export function CommandPalette(): JSX.Element | null {
                         {item.hint && (
                           <div
                             className={`line-clamp-1 text-xs ${
-                              isActive ? 'text-mint-100/90' : 'text-mint-600 dark:text-mint-400'
+                              isActive ? 'text-mint-100/90' : 'text-mint-600 dark:text-mint-300'
                             }`}
                           >
                             {item.hint}
@@ -341,7 +326,7 @@ export function CommandPalette(): JSX.Element | null {
           )}
         </div>
 
-        <div className="flex items-center justify-between gap-3 border-t border-mint-100 px-4 py-2 text-[11px] text-mint-600 dark:border-mint-800 dark:text-mint-400">
+        <div className="flex items-center justify-between gap-3 border-t border-mint-100 px-4 py-2 text-[11px] text-mint-600 dark:border-mint-800 dark:text-mint-300">
           <div className="flex items-center gap-3">
             <span className="inline-flex items-center gap-1">
               <kbd className="rounded border border-mint-200 bg-white/70 px-1 py-0.5 font-mono text-[10px] dark:border-mint-700 dark:bg-mint-900/60">↑↓</kbd>

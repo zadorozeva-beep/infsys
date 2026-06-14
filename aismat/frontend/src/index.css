@@ -179,7 +179,7 @@
 
   /* === Поля вводу === */
   .input {
-    @apply w-full rounded-2xl border border-mint-200/80 bg-white/80 px-4 py-2.5 text-sm text-slate-800 shadow-sm backdrop-blur transition placeholder:text-slate-400 focus:border-mint-400 focus:bg-white focus:outline-none focus:ring-4 focus:ring-mint-200/60 dark:border-mint-700/60 dark:bg-mint-900/40 dark:text-mint-50 dark:placeholder:text-mint-500 dark:focus:border-mint-400 dark:focus:bg-mint-900/60 dark:focus:ring-mint-700/40;
+    @apply w-full rounded-2xl border border-mint-200/80 bg-white/80 px-4 py-2.5 text-sm text-slate-800 shadow-sm backdrop-blur transition placeholder:text-slate-400 focus:border-mint-400 focus:bg-white focus:outline-none focus:ring-4 focus:ring-mint-200/60 dark:border-mint-700/60 dark:bg-mint-900/40 dark:text-mint-50 dark:placeholder:text-mint-300 dark:focus:border-mint-400 dark:focus:bg-mint-900/60 dark:focus:ring-mint-700/40;
   }
   .label {
     @apply mb-1.5 block text-xs font-semibold uppercase tracking-wider text-mint-700 dark:text-mint-300;

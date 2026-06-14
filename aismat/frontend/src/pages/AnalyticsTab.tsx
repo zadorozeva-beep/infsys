@@ -127,7 +127,7 @@ function KpiCard({
       <div className="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-mint-gradient text-white shadow-mint">
         {icon}
       </div>
-      <div className="mt-2 text-[11px] font-bold uppercase tracking-wider text-mint-600 dark:text-mint-400">{label}</div>
+      <div className="mt-2 text-[11px] font-bold uppercase tracking-wider text-mint-600 dark:text-mint-300">{label}</div>
       <div className="flex items-baseline gap-2">
         <div className="font-display text-3xl font-extrabold text-mint-900 dark:text-mint-100">
           <CountUp value={value} />
@@ -324,7 +324,7 @@ function HeatmapCard({
             {Array.from({ length: 24 }, (_, h) => (
               <div
                 key={h}
-                className="pb-1 text-center text-[9px] font-semibold text-mint-600 dark:text-mint-400"
+                className="pb-1 text-center text-[9px] font-semibold text-mint-600 dark:text-mint-300"
               >
                 {h % 3 === 0 ? `${h}` : ''}
               </div>
@@ -352,7 +352,7 @@ function HeatmapCard({
               </div>
             ))}
           </div>
-          <div className="mt-3 flex items-center justify-end gap-2 text-[11px] text-mint-600 dark:text-mint-400">
+          <div className="mt-3 flex items-center justify-end gap-2 text-[11px] text-mint-600 dark:text-mint-300">
             <span>менше</span>
             {[0.1, 0.3, 0.5, 0.7, 1].map((a) => (
               <div
@@ -417,7 +417,7 @@ function FunnelCard({
                 <span className="font-mono font-bold text-mint-900 dark:text-mint-100">
                   <CountUp value={s.value} />
                   {s.conv !== undefined && (
-                    <span className="ml-2 text-xs font-semibold text-mint-600 dark:text-mint-400">
+                    <span className="ml-2 text-xs font-semibold text-mint-600 dark:text-mint-300">
                       ({s.conv}%)
                     </span>
                   )}

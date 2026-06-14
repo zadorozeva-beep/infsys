@@ -31,7 +31,7 @@ export class ErrorBoundary extends Component<Props, State> {
   render(): ReactNode {
     if (this.state.error) {
       return (
-        <div className="flex min-h-screen items-center justify-center bg-mint-radial px-4 py-12">
+        <div className="flex min-h-screen items-center justify-center bg-mint-radial dark:bg-mint-radial-dark px-4 py-12">
           <div className="card flex max-w-lg flex-col items-center gap-3 text-center">
             <span className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-rose-400 to-rose-600 text-white shadow-mint">
               <AlertTriangle size={26} strokeWidth={2.5} />
